@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Http\Requests\Estate\CategoryRequest;
-use App\Http\Resources\CategoryResource;
 
 class CategoryController extends Controller
 {
@@ -14,7 +13,7 @@ class CategoryController extends Controller
     {
         $categories = Category::with('products')->paginate(20);
 
-        return CategoryResource::collection($categories);
+        return $categories;
     }
 
     public function store(CategoryRequest $request)
@@ -23,14 +22,14 @@ class CategoryController extends Controller
 
         $category = Category::create($data);
 
-        return new CategoryResource($category);
+        return $category;
     }
 
     public function show($id)
     {
         $category = Category::with('products')->findOrFail($id);
 
-        return new CategoryResource($category);
+        return $category;
     }
 
     public function update(CategoryRequest $request, $id)
@@ -41,7 +40,7 @@ class CategoryController extends Controller
 
         $category->update($data);
 
-        return new CategoryResource($category);
+        return $category;
     }
 
     public function destroy($id)

@@ -45,18 +45,6 @@ class CategoryControllerTest extends TestCase
                 ],
             ]);
 
-        $response->assertJsonStructure([
-            'data' => [
-                '*' => [
-                    'id',
-                    'name',
-                    'parent_id',
-                    'created_at',
-                    'updated_at',
-                    'deleted_at',
-                ],
-            ],
-        ]);
     }
 
     public function test_can_create_category()
@@ -72,26 +60,11 @@ class CategoryControllerTest extends TestCase
     
         $response->assertStatus(201)
             ->assertJsonStructure([
-                'data' => [
                     'id',
                     'name',
-                    'parent_id',
                     'created_at',
                     'updated_at',
-                    'deleted_at',
-                ],
             ]);
-        $response->assertJson([
-            'data' => [
-                'id' => $response['data']['id'],
-                'name' => $response['data']['name'],
-                'parent_id' => $response['data']['parent_id'],
-                'created_at' => $response['data']['created_at'],
-                'updated_at' => $response['data']['updated_at'],
-                'deleted_at' => $response['data']['deleted_at'],
-            ],
-        ]);
-    
         $this->assertDatabaseHas('categories', $categoryData);
     }
 

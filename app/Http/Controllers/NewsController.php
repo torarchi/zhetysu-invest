@@ -8,22 +8,21 @@ use App\Models\News;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\NewsRequest;
 use App\Http\Requests\NewsIndexRequest;
-use App\Http\Resources\NewsResource; 
 
 class NewsController extends Controller
 {
     public function index(NewsIndexRequest $request)
     {
-        $items = $request->input('items') ?? 20;
+        $limit = $request->input('items') ?? 20;
         
-        $news = News::paginate($items);
-        return NewsResource::collection($news);
+        $news = News::paginate($limit);
+        return $news;
     }
 
     public function show($id)
     {
         $news = News::findOrFail($id);
-        return new NewsResource($news);
+        return $news;
     }
     
     public function store(NewsRequest $request)
@@ -31,7 +30,7 @@ class NewsController extends Controller
         $data = $request->validated();
         $news = News::create($data);
 
-        return new NewsResource($news);
+        return $news;
     }
 
     public function update(NewsRequest $request, $id)
@@ -41,7 +40,7 @@ class NewsController extends Controller
         $news = News::findOrFail($id);
         $news->update($data);
 
-        return new NewsResource($news);
+        return $news;
     }
 
     public function destroy($id)

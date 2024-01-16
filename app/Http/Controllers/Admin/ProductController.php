@@ -7,14 +7,13 @@ use Illuminate\Http\Request;
 use App\Models\Product; 
 use App\Models\Category; 
 use App\Http\Requests\Estate\ProductRequest; 
-use App\Http\Resources\ProductResource;
 
 class ProductController extends Controller 
 {
     public function index()
     {
         $products = Product::paginate(20); 
-        return ProductResource::collection($products);
+        return $products;
     }
     
     public function store(ProductRequest $request) 
@@ -23,13 +22,13 @@ class ProductController extends Controller
     
         $product = Product::create($data); 
     
-        return new ProductResource($product);
+        return $product;
     }
     
     public function show($id)
     {
         $product = Product::findOrFail($id);
-        return new ProductResource($product);
+        return $product;
     }
     
     public function update(ProductRequest $request, $id)
@@ -40,7 +39,7 @@ class ProductController extends Controller
     
         $product->update($data);
     
-        return new ProductResource($product);
+        return $product;
     }
 
     public function destroy($id)
@@ -51,7 +50,7 @@ class ProductController extends Controller
         return response()->json(['success' => true], 200);
     }
 
-    public function publicIndex(Request $request)
+    /* public function publicIndex(Request $request)
     {
         $categoryId = $request->input('category_id');
         
@@ -64,6 +63,7 @@ class ProductController extends Controller
             'products' => $products->toArray(), 
         ], 200);
     }
+    */
     
 
 }

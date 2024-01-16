@@ -47,11 +47,16 @@ class User extends Authenticatable
 
     protected $appends = ['role_name'];
 
-    public function getRoleNameAttribute() 
+    public function getRoleNameAttribute()
     {
-        if ($this->role_id == 1) 
-            return "User";
-        else if ($this->role_id == 2)
-            return "Admin";
-    }   
+        switch ($this->role_id) {
+            case 1:
+                return "User";
+            case 2:
+                return "Admin";
+            default:
+                return "Unknown Role";
+        }
+    }
+    
 }
