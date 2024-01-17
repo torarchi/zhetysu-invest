@@ -13,24 +13,27 @@ class NewsController extends Controller
 {
     public function index(NewsIndexRequest $request)
     {
-        $limit = $request->input('items') ?? 20;
-        
+        $limit = isset($request->limit) ? $request->limit : 20;
+
         $news = News::paginate($limit);
+
         return $news;
     }
 
     public function show($id)
     {
         $news = News::findOrFail($id);
+
         return $news;
     }
     
     public function store(NewsRequest $request)
     {
         $data = $request->validated();
-        $news = News::create($data);
 
-        return $news;
+        News::create($data);
+
+        return response()->json(['success' => true]);
     }
 
     public function update(NewsRequest $request, $id)
@@ -38,16 +41,18 @@ class NewsController extends Controller
         $data = $request->validated();
 
         $news = News::findOrFail($id);
+
         $news->update($data);
 
-        return $news;
+        return response()->json(['success' => true]);
     }
 
     public function destroy($id)
     {
         $news = News::findOrFail($id);
+
         $news->delete();
 
-        return response()->json(['success' => true], 200);
+        return response()->json(['success' => true]);
     }
 }

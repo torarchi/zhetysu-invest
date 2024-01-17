@@ -16,9 +16,9 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check() && Auth::user()->role_id !== 2) {
-            return response()->json(['error' => 'Unauthorized'], 403);
-        }
+        if (Auth::user()->role_id !== 2)
+            return response()->json(['error' => 'Only available to administrator'], 403);
+
         return $next($request);
     }
 }

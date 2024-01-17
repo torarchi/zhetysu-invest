@@ -11,23 +11,21 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::with('products')->paginate(20);
+        $categories = Category::paginate(20);
 
         return $categories;
     }
 
     public function store(CategoryRequest $request)
     {
-        $data = $request->validated();
+        $category = Category::create($request->all());
 
-        $category = Category::create($data);
-
-        return $category;
+        return response()->json(['success' => true]);
     }
 
     public function show($id)
     {
-        $category = Category::with('products')->findOrFail($id);
+        $category = Category::findOrFail($id);
 
         return $category;
     }
@@ -36,18 +34,17 @@ class CategoryController extends Controller
     {
         $category = Category::findOrFail($id);
 
-        $data = $request->validated();
+        $category->update($request->all());
 
-        $category->update($data);
-
-        return $category;
+        return response()->json(['success' => true]);
     }
 
     public function destroy($id)
     {
         $category = Category::findOrFail($id);
+
         $category->delete();
 
-        return response()->json(['success' => true], 200);
+        return response()->json(['success' => true]);
     }
 }

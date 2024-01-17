@@ -51,11 +51,11 @@ class User extends Authenticatable
     {
         switch ($this->role_id) {
             case 1:
-                return "User";
+                return "user";
             case 2:
-                return "Admin";
+                return "admin";
             default:
-                return "Unknown Role";
+                return "unknown role";
         }
     }
     

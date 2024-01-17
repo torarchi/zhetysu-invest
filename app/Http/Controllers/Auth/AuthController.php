@@ -26,6 +26,6 @@ class AuthController extends Controller
             return response()->json($response, 200);
         }
 
-        return response()->json(['error' => 'Неверные данные'], 401);
+        return response()->json(['error' => 'Wrong login or password'], 401);
     }
 }

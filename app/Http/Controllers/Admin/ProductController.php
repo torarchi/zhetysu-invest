@@ -12,22 +12,22 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::paginate(20); 
+        $products = Product::paginate(20);
+
         return $products;
     }
     
     public function store(ProductRequest $request) 
     {
-        $data = $request->validated();
+        Product::create($request->all()); 
     
-        $product = Product::create($data); 
-    
-        return $product;
+        return response()->json(['success' => true], 200);
     }
     
     public function show($id)
     {
         $product = Product::findOrFail($id);
+
         return $product;
     }
     
@@ -35,16 +35,15 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id); 
     
-        $data = $request->validated();
+        $product->update($request->all());
     
-        $product->update($data);
-    
-        return $product;
+        return response()->json(['success' => true], 200);
     }
 
     public function destroy($id)
     {
         $product = Product::findOrFail($id); 
+
         $product->delete();
 
         return response()->json(['success' => true], 200);

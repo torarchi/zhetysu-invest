@@ -11,15 +11,13 @@ use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
-    public function register(RegisterRequest $request){
+    public function register(RegisterRequest $request)
+    {
         $data = $request->validated();
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role_id' => 1,
-        ]);
+        $data["password"] = Hash::make($data["password"]);
+
+        $user = User::create($data);
 
         $token = $user->createToken('AppToken')->accessToken;
 

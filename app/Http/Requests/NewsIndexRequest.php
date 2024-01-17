@@ -22,7 +22,7 @@ class NewsIndexRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'items' => 'sometimes|required|integer|min:6',
+            'limit' => 'nullable',
         ];
     }
 }
